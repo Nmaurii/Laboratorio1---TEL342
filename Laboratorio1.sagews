@@ -1,4 +1,4 @@
-#se evalua que el caracter este en la tabla de valores ASCII, especificamente en el rango de letras minusculas corresponde desde el 97 al 122.
+#se evalua que el caracter este en la tabla de valores ASCII, especificamente en el rango de letras minusculas que corresponde del 97 al 122.
 def ingles_alfabeto(letra,bool=False):
     if(ord(letra.lower())>=97 and ord(letra.lower())<=122):
         bool = True
