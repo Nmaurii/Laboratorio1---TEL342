@@ -1,3 +1,23 @@
+#se evalua que el caracter este en la tabla de valores ASCII, especificamente en el rango de letras minusculas corresponde desde el 97 al 122.
+def ingles_alfabeto(letra,bool=false):
+    if(ord(letra.lower())>=97 and ord(letra.lower())<=122):
+        bool = true
+    return bool
+
+#dado que la letra 'a' se ubica en la posicion 97 en ASCII, se debe hacer un desplazamiento de cada posicion de 97 unidades respecto cada letra ingresada.
+def convertir_numero(letra):
+    return ord(letra.lower())-97
+
+#funcion que retorna la operacion mod 26 sobre la suma de key mas el valor de la letra como parametro (c+k), siendo este llave_letra.
+def mod(letra_llave):
+    return letra_llave % 26
+
+#funcion que comprueba que "a" no sea divisible por 2 ni por 13
+def verificar_a(a, bool=false):
+    if(a % 2 != 0 | a % 13 != 0):
+        bool = true
+    return bool
+
 #funcion de cifrado hill, recibe un texto plano y una llave la cual es una matriz de 2x2 invertible de Sage sobre los enteros modulo 26.
 def cifrado_hill_2x2(texto, K):
     key = Matrix(ZZ,K)
