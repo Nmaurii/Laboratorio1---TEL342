@@ -1,4 +1,4 @@
-︠b84822a6-efcc-45b4-8be6-376ad9c6b7d9︠
+
 def BreakBBWithFactors (state, p, q):
 
     #verificamos que los numeros entregados como parametros cumplan con ser 3 modulo 4
@@ -23,7 +23,7 @@ def BreakBBWithFactors (state, p, q):
     if state not in pos_estados:
         pos_estados.append(state)
     
-    #restr
+    #restringimos a que la lista posee solo 4 posibilidades
     pos_estados = [est for est in pos_estados if est != state][:3]  
     pos_estados.append(state)  
 
@@ -36,7 +36,6 @@ print(BreakBBWithFactors(state[1], 565184539 , 1038996839))
 state1 = [104723 * 413123, 6789456]
 print(BreakBBWithFactors(state1[1], 104723 , 413123))
 
-︡3d3fcb00-0ed4-458c-be30-05b6476867a1︡{"stdout":"[67785050895416685, 317201191987735264, 270023757484936957, 12345678]\n"}︡{"stdout":"[30519334874, 6232500329, 37030979600, 6789456]\n"}︡{"done":true}
 
 
 
