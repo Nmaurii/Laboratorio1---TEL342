@@ -1,4 +1,4 @@
-from sage.all_cmdline import *
+
 def previous_bbs_state(state):
     N = state[0]
     R = IntegerModRing(N)
