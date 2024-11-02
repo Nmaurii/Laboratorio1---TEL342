@@ -56,3 +56,19 @@ e = 23
 valor_constante = valor_d(e,phi_euler(n))
 print("Clave publica : Pu[{0},{1}] -> Es buena la firma {3}: {2} ".format(e,n,check_firma(n,e,m,c),m))
 
+#================== Pregunta (c)
+
+'''
+Para este item se encripta para obtener la firma, luego se desencripta para confirmar que coincidan los 
+valores.
+'''
+
+p = 3181
+q = 2677
+e = 163
+m = 521
+
+firma = encrpitado((p*q),e,m)
+firmar = desencriptar((p*q),e,firma)
+
+print("firma generada (encriptado) : {0} y su confirmacion (descifrado): {1}".format(firma,firmar))
