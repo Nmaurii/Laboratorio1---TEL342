@@ -6,10 +6,11 @@ def phi_euler(numero):
         valor*=(1-1/x)
     return valor
 
-def check_primo(x, es = False):
-    if(x <= 3 or x%2 != 0 and x%3 != 0):
-        es = True
-    return es
+def check_primo(x):
+    for n in range(2,x):
+        if x % n == 0:
+            return False
+    return True
 
 def valor_d(e,phi):
     #aqui se determina el valor k de  : d x e = 1 + k * pi(n)
@@ -22,19 +23,19 @@ def valor_d(e,phi):
 #================ Item 1 => Pregunta (a)
 #================ Desencrpitado 
 
-def desencriptar(n,e,c):
+def descifrado(n,e,c):
     d = valor_d(e,phi_euler(n))
     return (pow(c,d) % (n))
 
-#print(desencriptar((6569*8089),11,28901722))
+#print(descifrado((6569*8089),11,28901722))
 
 #================ Item 1 => Pregunta (b)
 #================ Encrpitado 
 
-def encrpitado(n,e,m):
+def cifrado(n,e,m):
     return pow(m,e) % n
 
-#print(encrpitado(37617577,529,449))
+#print(cifrado(37617577,529,449))
 
 #================ Item 1 => Pregunta (c)
 
@@ -46,7 +47,8 @@ def valor_e(d,phi):
             return (1+x*phi)/d
         x+=1
 
-print(valor_e(223,phi_euler(1723*5381)))
+#print(valor_e(223,phi_euler(1723*5381)))
 
 #================ Item 1 => Pregunta (d)
+
 
