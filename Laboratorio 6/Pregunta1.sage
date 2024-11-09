@@ -40,6 +40,7 @@ def cifrado(n,e,m):
 #================ Item 1 => Pregunta (c)
 
 def valor_e(d,phi):
+
     #aqui se determina el valor k de  : d x e = 1 + k * pi(n)
     x = 1
     while True:
@@ -51,4 +52,36 @@ def valor_e(d,phi):
 
 #================ Item 1 => Pregunta (d)
 
+#definimos las siguientes funciones :
+
+def generador_valores(p,q):
+
+    phi = phi_euler((p*q))
+
+    while True:
+        e = randint(2,phi-1)
+        if(gcd(phi,e) == 1  and e != valor_d(e,phi)):
+            d = valor_d(e,phi)
+            return e,d
+
+def generador_RSA(p,q):
+
+    e,d = generador_valores(p,q)
+    n = p*q
+    return (e,n),(d,n)
+
+p = 61
+q = 53
+n = p*q
+
+publica,privada = generador_RSA(p,q)
+d = valor_d(publica[0],phi_euler(n))
+
+print("Clave publica : Pu{0}\nClave privada : Pr{1} ".format(publica,privada))
+
+mensaje = 30
+mensaje_cifrado = cifrado(n,publica[0],mensaje)
+mensaje_descifrado = descifrado(n,d,mensaje_cifrado)
+
+print("[{0}] -> [{1}] -> [{2}]".format(mensaje,mensaje_cifrado,mensaje_descifrado))
 
