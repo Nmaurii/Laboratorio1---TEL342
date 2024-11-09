@@ -6,10 +6,11 @@ def phi_euler(numero):
         valor*=(1-1/x)
     return valor
 
-def check_primo(x, es = False):
-    if(x <= 3 or x%2 != 0 and x%3 != 0):
-        es = True
-    return es
+def check_primo(x):
+    for n in range(2,x):
+        if x % n == 0:
+            return False
+    return True
 
 def valor_e(d,phi):
     #aqui se determina el valor k de  : d x e = 1 + k * pi(n)
@@ -67,15 +68,18 @@ def descifrado(n,d,c):
 
 #================== Pregunta (d)
 
-p = 6569
-q = 8089
+p = 61
+q = 53
 n = p*q
 
 publica,privada = generador_RSA(p,q)
+d = valor_d(publica[0],phi_euler(n))
+
 print("Clave publica : Pu{0}\nClave privada : Pr{1} ".format(publica,privada))
 
-mensaje = 28901722
+mensaje = 30
 mensaje_cifrado = cifrado(n,publica[0],mensaje)
-mensaje_descifrado = descifrado(n,privada[0],mensaje_cifrado)
+mensaje_descifrado = descifrado(n,d,mensaje_cifrado)
 
 print("[{0}] -> [{1}] -> [{2}]".format(mensaje,mensaje_cifrado,mensaje_descifrado))
+
