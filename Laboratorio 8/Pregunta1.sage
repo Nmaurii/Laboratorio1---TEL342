@@ -22,7 +22,7 @@ class Comunicacion:
         valores = []
         while i < final:
             numero = randint(1,self.__p-2) 
-            if (numero not in valores and gcd(numero, self.__p - 1)):
+            if (numero not in valores):
                 valores.append(numero)
                 if(len(valores) == 2 and gcd(valores[0]+valores[1],self.__p-1) != 1):
                     del valores[i]
@@ -43,29 +43,25 @@ class Comunicacion:
     
     def get_clave_publica(self):
         return self.clave_publica
-
+    
     def clave_secreta_final(self,clave_intermedia):
 
         w = self.__valores_secretos[0] + self.__valores_secretos[1]
         inverso = inverse_mod(w,self.__p - 1)
-        return pow(clave_intermedia,inverso) % self.__p
+        return pow(clave_intermedia,inverso*(self.__valores_secretos[0] + self.__valores_secretos[1])) % self.__p
 
 # valores de p = 23 y g = 5 son buenos
 
 Alice = Comunicacion("Alice",23,5)
 Bob   = Comunicacion("Bob",23,5)
 
-print(Alice.get_clave_publica())
-print(Bob.get_clave_publica())
 
 P1,Q1 = Alice.get_clave_publica()
 P2,Q2 = Bob.get_clave_publica()
-
 intermedia1 = Alice.clave_secreta_compartida_intermedia(P2,Q2)
 intermedia2 = Bob.clave_secreta_compartida_intermedia(P1,Q1)
 
-print(intermedia1)
-print(intermedia2)
+plantilla = "******Sesion entre Alice y  Bob establecida ******\n=====\tClaves publicas -> Alice {0} y Bob {1}".format(Alice.get_clave_publica(),Bob.get_clave_publica())
+plantilla2 = "Clave secreta final por Alice {0} y Bob {1}".format(Alice.clave_secreta_final(intermedia1),Bob.clave_secreta_final(intermedia2))
 
-print(Alice.clave_secreta_final(intermedia1))
-print(Bob.clave_secreta_final(intermedia2))
+print(plantilla,"\n",plantilla2)
