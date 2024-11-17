@@ -22,39 +22,47 @@ class Comunicacion:
         valores = []
         while i < final:
             numero = randint(1,self.__p-2) 
-            if (numero not in valores):
+            if (numero not in valores and gcd(numero,self.__p)):
                 valores.append(numero)
                 i+=1
         return tuple(valores)
 
     def __generador_clave_publica(self):
         x,y,z = self.__valores_secretos
-        P = pow(self.__g,(self.__clave_privada+z)) % self.__p
+        P = pow(self.__g,(x+z)) % self.__p
         Q = pow(self.__g,(y+z)) % self.__p
         return P,Q
 
-    def generador_clave_secreta_compartida_intermedia(self,P,Q):
-        return pow(P,self.__clave_privada+self.__valores_secretos[2])*pow(Q,self.__valores_secretos[1]+self.__valores_secretos[2]) % self.__p
-    
-        
-    def inverso_multiplicativo(self):
-        return 1/(self.__valores_secretos[0] + self.__valores_secretos[1])
-
     #getters acceso a informacion publica como clave publica
+
+    def clave_secreta_compartida_intermedia(self,P,Q):
+        return pow(P,self.__valores_secretos[0]+self.__valores_secretos[2])*pow(Q,self.__valores_secretos[1]+self.__valores_secretos[2]) % self.__p
+    
     def get_clave_publica(self):
         return self.clave_publica
+
+    def clave_secreta_final(self,clave_intermedia):
+    
+        w = self.__valores_secretos[0] + self.__valores_secretos[1]
+        inverso = inverse_mod(w,self.__p - 1)
+        return pow(clave_intermedia,inverso)*pow(clave_intermedia,self.__valores_secretos[2]) % self.__p
 
 # valores de p = 23 y g = 5 son buenos
 
 Alice = Comunicacion("Alice",23,5)
 Bob   = Comunicacion("Bob",23,5)
 
+print(Alice.get_clave_publica())
+print(Bob.get_clave_publica())
+
 P1,Q1 = Alice.get_clave_publica()
 P2,Q2 = Bob.get_clave_publica()
 
-print(Alice.generador_clave_secreta_compartida_intermedia(P2,Q2))
-print(Bob.generador_clave_secreta_compartida_intermedia(P1,Q1))
+intermedia1 = Alice.clave_secreta_compartida_intermedia(P2,Q2)
+intermedia2 = Bob.clave_secreta_compartida_intermedia(P1,Q1)
 
-#print(Alice.get_clave_publica())
+print(intermedia1)
+print(intermedia2)
 
-#print(Bob.generador_clave_secreta_compartida(P,Q))
+print(Alice.clave_secreta_final(intermedia1))
+print(Bob.clave_secreta_final(intermedia2))
