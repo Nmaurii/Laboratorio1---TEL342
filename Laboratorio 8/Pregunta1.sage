@@ -22,8 +22,11 @@ class Comunicacion:
         valores = []
         while i < final:
             numero = randint(1,self.__p-2) 
-            if (numero not in valores and gcd(numero,self.__p)):
+            if (numero not in valores and gcd(numero, self.__p - 1)):
                 valores.append(numero)
+                if(len(valores) == 2 and gcd(valores[0]+valores[1],self.__p-1) != 1):
+                    del valores[i]
+                    i-=1
                 i+=1
         return tuple(valores)
 
@@ -42,10 +45,10 @@ class Comunicacion:
         return self.clave_publica
 
     def clave_secreta_final(self,clave_intermedia):
-    
+
         w = self.__valores_secretos[0] + self.__valores_secretos[1]
         inverso = inverse_mod(w,self.__p - 1)
-        return pow(clave_intermedia,inverso)*pow(clave_intermedia,self.__valores_secretos[2]) % self.__p
+        return pow(clave_intermedia,inverso) % self.__p
 
 # valores de p = 23 y g = 5 son buenos
 
